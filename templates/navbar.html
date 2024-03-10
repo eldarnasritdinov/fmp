@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">{{ translations.brand }}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('index') }}">{{ translations.home }}</a>
+      </li>
+
+      {% if current_user.is_authenticated %}
+
+      {% if current_user.id == 20 %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('admin') }}">{{ translations.admin_page }}</a>
+      </li>
+      {% endif %}
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout') }}">{{ translations.logout }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('dashboard') }}">{{ translations.dashboard }}</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('login') }}">{{ translations.login }}</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('add_user') }}">{{ translations.register }}</a>
+      </li>
+      {% endif %}
+
+      {% if current_user.is_authenticated and current_user.role == 'organizer' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('add_news') }}">{{ translations.create_news }}</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('add_post') }}">{{ translations.add_event_post }}</a>
+      </li>
+      {% endif %}
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ translations.more }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% if current_user.is_authenticated %}
+          <a class="dropdown-item" href="#">{{ translations.language }}</a>
+          <a class="dropdown-item" href="#">{{ translations.todo_list }}</a>
+          <a class="dropdown-item" href="#">{{ translations.settings }}</a>
+          <div class="dropdown-divider"></div>
+          {% endif %}
+          <a class="dropdown-item" href="{{ url_for('support') }}">{{ translations.support }}</a>
+        </div>
+      </li>
+
+
+    </ul>
+    <form method="POST" action="{{ url_for('search') }}" class="form-inline my-2 my-lg-0">
+      {{ form.hidden_tag() }}
+      <input name="searched" class="form-control mr-sm-2" type="search" placeholder="{{ translations.search_event }}" aria-label="Search">
+      <button class="btn btn-outline-success  my-2 my-sm-0" type="submit">{{ translations.search }}</button>
+    </form>
+  </div>
+</nav>

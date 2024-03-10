@@ -1,0 +1,13 @@
+h1 {
+    color: blue;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+header {
+        height: 90px;
+        width: 100%;
+        background-color: #62828F;
+    }

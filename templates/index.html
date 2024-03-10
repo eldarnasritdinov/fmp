@@ -1,3 +1,14 @@
-<h1>Hello World</h1>
+{% extends 'base.html' %}
 
-<p>Welcome!</p>
+{% block content %}
+
+
+{% if current_user.is_authenticated %}
+    <h1><a href="{{ url_for('news') }}">{{ translations['news'] }}</a></h1> <br>
+    <h1><a href="{{ url_for('posts') }}">{{ translations['events'] }}</a></h1> <br>
+{% else %}
+    <h1><a href="{{ url_for('news') }}">News</a></h1> <br>
+    <h1><a href="{{ url_for('posts') }}">Events</a></h1> <br>
+{% endif %}
+
+{% endblock %}

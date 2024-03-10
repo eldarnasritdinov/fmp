@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <b><h2>{{ post.title }}</h2></b> <br>
+    {{ translations.by }}: {{ post.poster.name }} <br> <hr>
+    <p>{{ post.content|safe }}<br>
+</div>
+
+    <br>
+
+<div class="card mb-3">
+    <div class="row no-gutters">
+
+        <div class="col-md-2">
+            {% if post.poster.profile_pic %}
+                <img src="{{ url_for('static', filename='images/' + post.poster.profile_pic) }}" height="200" align="left">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default_profile.jpg') }}" width="150" align="left">
+            {% endif %}
+        </div>
+
+        <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.poster.name }}</h5>
+                <p class="card-text">
+                    {% if post.poster.about %}
+                        {{ translations.about_author }}: {{ post.poster.about }}
+                    {% else %}
+                        {{ translations.about_author }}: {{ translations.author_has_no_profile_yet }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<a href="{{ url_for('posts') }}" class="btn btn-outline-secondary">{{ translations.go_back }}</a>
+{% if current_user.is_authenticated and post.poster_id == current_user.id %}
+    <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger">{{ translations.delete }}</a>
+{% endif %}
+
+{% endblock %}

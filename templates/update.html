@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+{% endfor %}
+
+{% if (id == current_user.id) or (current_user.id == 20) %}
+
+<h1>Update User</h1>
+<br/><br>
+<!--ID to update: {{ id }} <br>-->
+<!--Current ID: {{ current_user.id }} <br>-->
+
+<form action="/update/{{ name_to_update.id }}" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control", value=name_to_update.username) }}
+    </div>
+    <div class="form-group">
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control", value=name_to_update.name) }}
+    </div>
+    <div class="form-group">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control", value=name_to_update.email) }}
+    </div>
+    <div class="form-group">
+        {{ form.sex.label(class="form-label") }}
+        {{ form.sex(class="form-control", value=name_to_update.sex) }}
+    </div>
+    <div class="form-group">
+        <label for="about" class="form-label">About</label>
+        <textarea name="about" id="about" class="form-control">{{ name_to_update.about }}</textarea>
+    </div>
+    <div class="form-group">
+        {{ form.language.label(class="form-label") }}
+        {{ form.language(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.profile_pic.label(class="form-label") }}
+        {{ form.profile_pic(class="form-control-file", value=name_to_update.profile_pic) }}
+    </div>
+
+    {{ form.submit(class="btn btn-secondary") }}
+    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Go back</a> <br><br>
+
+
+    <a href="{{ url_for('delete', id=id) }}" class="btn btn-danger">DELETE ACCOUNT</a>
+
+</form>
+
+<br> <br>
+
+<!--<br><br><br>-->
+<!--{% for our_user in our_users %}-->
+<!--    (UserID: {{ our_user.id }}) {{ our_user.name }} - {{ our_user.email }} <br>-->
+<!--{% endfor %}-->
+
+{% else %}
+
+<h2>You cannot edit this user</h2>
+
+{% endif %}
+
+{% endblock %}

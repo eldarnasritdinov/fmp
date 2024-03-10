@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+
+{% if current_user.is_authenticated %}
+    <h1>{{ translations.news }}</h1>
+{% else %}
+    <h1>{{ translations.news }}</h1>
+{% endif %}
+
+<br><br><br>
+
+{% for n in news %}
+    <h2><b>{{ n.name }}</b></h2> <br>
+    <p>{{ n.description }}</p>
+    <hr>
+{% endfor %}
+
+{% endblock %}

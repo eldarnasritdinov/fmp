@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+
+
+<h1>{{ translations['dashboard'] }}</h1>
+<p>{{ translations['logged_in'] }}</p>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    {{ translations['dashboard'] }}
+  </div>
+  <ul class="list-group list-group-flush">
+    {% if current_user.profile_pic %}
+      <li class="list-group-item">{{ translations['profile_picture'] }}: <br> <img width="150px" src="{{ url_for('static', filename='images/' + current_user.profile_pic) }}"> </li>
+    {% else %}
+        <li class="list-group-item">{{ translations['profile_picture'] }}: <br> <img width="150px" src="{{ url_for('static', filename='images/default_profile.jpg') }}"> </li>
+    {% endif %}
+    <li class="list-group-item">{{ translations['role'] }}: <strong>{{ current_user.role }}</strong> </li>
+    <li class="list-group-item">{{translations['username']}}: <strong>{{ current_user.username }}</strong> </li>
+    <li class="list-group-item">{{translations['name']}}: <strong>{{ current_user.name }}</strong> </li>
+    <li class="list-group-item">{{translations['email']}}: <strong>{{ current_user.email }}</strong> </li>
+    <li class="list-group-item">{{translations['language']}}: <strong>{{ current_user.language }}</strong> </li>
+    <li class="list-group-item">{{translations['gender']}}: <strong>{{ current_user.sex }}</strong> </li>
+    <li class="list-group-item">{{translations['joined']}}: <strong>{{ current_user.date_added }}</strong> </li>
+    <li class="list-group-item">{{translations['about']}}: <strong>{{ current_user.about }}</strong> </li>
+    <li class="list-group-item">{{translations['profile_picture']}}: <strong>{{ current_user.profile_pic }}</strong> </li>
+
+
+  </ul>
+</div>
+
+<br><br>
+
+<a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary">{{ translations['update_user'] }}</a>
+<a href="{{ url_for('logout') }}"><button type="button" class="btn btn-dark">{{ translations['logout'] }}</button></a>
+<a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger">{{ translations['delete_user'] }}</a>
+
+
+
+<br><br><br>
+
+
+
+{% endblock %}

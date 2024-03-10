@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Admin Page</h2>
+
+    {% for our_user in our_users %}
+        Account type: {{our_user.role}}. (UserID: {{ our_user.id }}) {{ our_user.username }} <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }}. {{ our_user.sex }} - <a href="{{ url_for('delete', id=our_user.id) }}">DELETE</a> <br>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ translations.edit_post }}</h1>
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            <label class="form-label">{{ translations['title'] }}</label>
+            {{ form.title(class="form-control") }}
+        </div>
+        {{ form.slug.label(class="form-label") }}
+        {{ form.slug(class="form-control") }}
+        <br/>
+        <div class="form-group">
+            <label class="form-label">{{ translations['content'] }}</label>
+            {{ form.content(class="form-control") }}
+        </div>
+        <br/>
+
+        {{ form.submit(class="btn btn-secondary", rows="15") }}
+
+    </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='content') }}
+
+</div>
+
+<a href="{{ url_for('posts') }}" class="btn btn-outline-secondary">{{ translations.go_back }}</a>
+
+{% endblock %}
