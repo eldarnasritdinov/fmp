@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+{% endfor %}
+
+{% if current_user.is_authenticated %}
+
+<h1>{{ translations['add_event_post'] }}</h1>
+
+
+    <form method="GET" action="{{ url_for('add_post') }}">
+        <div class="form-group">
+            <label class="form-label">Search Users</label>
+            <input type="text" name="searched" class="form-control" placeholder="Search for a user">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    <br>
+
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            <label class="form-label">{{ translations['title'] }}</label>
+            {{ form.title(class="form-control") }}
+        </div>
+        <br/>
+        {{ form.slug.label(class="form-label") }}
+        {{ form.slug(class="form-control") }}
+        <br/>
+
+        <div class="form-group">
+            <label class="form-label">{{ translations['content'] }}</label>
+            {{ form.content(class="form-control") }}
+        </div>
+        <br/>
+
+        <!-- Input field for searching users -->
+
+
+        <!-- Display search results -->
+        {% if users %}
+            <h3>Search Results:</h3>
+            <ul>
+                {% for user in users %}
+                    <li>{{ user.username }}
+                        <form method="POST" action="{{ url_for('add_post') }}">
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <button type="submit" class="btn btn-success">Invite</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% elif message %}
+            <p>{{ message }}</p>
+        {% endif %}
+
+        <!-- Display included users -->
+        <div class="form-group">
+            <label class="form-label">Included Users:</label>
+            <ul id="included_users_list">
+                {% for username in included_users %}
+                    <li>{{ username }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <br>
+
+        {{ form.submit(class="btn btn-secondary", rows="15", value=translations['submit']) }}
+
+    </form>
+
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='content') }}
+
+<br><br>
+
+
+{% else %}
+<h2>{{ translations['in_order_to_access_you_need_to'] }} <b><a href="{{ url_for('login') }}">{{ translations['login'] }}</a></b></h2>
+{% endif %}
+
+{% endblock %}

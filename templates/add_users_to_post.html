@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+{% endfor %}
+
+{% if current_user.is_authenticated %}
+    {% if post %}
+        <h1>Add Users to Post: {{ post.title }}</h1>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('search_user_to_post', post_id=post.id) }}" class="form-inline my-2 my-lg-0">
+          {{ form.hidden_tag() }}
+            <input name="searched" class="form-control mr-sm-2" type="search" placeholder="{{ translations.search_by_username }}" aria-label="Search">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" name="action" value="search">{{ translations.search }}</button>
+    </form>
+
+    <!-- Display search results and invite buttons here -->
+
+        {% if users %}
+
+        {% for user in users %}
+            <div class="shadow p-3 mb-5 bg-body rounded">
+                <b><h2>{{ user.username }}</h2></b> <br>
+                {{ translations.name }}: {{ user.name }} <br>
+                {{ translations.role }}: {{user.role}} <br>
+                {{ translations.email }}: {{user.email}} <br> <hr>
+                <a href="{{ url_for('invite_user_to_post', post_id=post.id, user_id=user.id) }}" class="btn btn-outline-secondary">{{ translations.invite }}</a><br>
+            </div>
+        {% endfor %}
+
+        <br>
+
+    {% elif message %}
+
+        <h1>{{ message }}</h1>
+
+    {% else %}
+
+        <br>
+        <a href="{{ url_for('post', id=post.id) }}"><button type="button" class="btn btn-outline-light">{{ translations.submit }}</button></a>
+
+
+    {% endif %}
+
+{% else %}
+    <h2>{{ translations['in_order_to_access_you_need_to'] }} <b><a href="{{ url_for('login') }}">{{ translations['login'] }}</a></b></h2>
+{% endif %}
+
+{% endblock %}

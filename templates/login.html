@@ -3,7 +3,7 @@
 {% block content %}
 
 {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
       {{message}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -11,25 +11,29 @@
     </div>
 {% endfor %}
 
-<h1>{{ translations.login }}</h1>
+<div class="log_in_out_wrapper">
+    <div class="log_in_out">
 
-<br/>
-<form method="POST">
-    {{ form.hidden_tag() }}
+        <h1>{{ translations.login }}</h1> <br>
+        <p>{{ translations.if_account_not_exists }} <b><a href="{{ url_for('add_user') }}">{{ translations.register }}</a></b> </p> <br>
 
-    <label for="username" class="form-label">{{ translations.username }}</label>
-    <input type="text" name="username" id="username" class="form-control">
-    <br/>
+        <form method="POST">
+            {{ form.hidden_tag() }}
 
-    <label for="password" class="form-label">{{ translations.password }}</label>
-    <input type="password" name="password" id="password" class="form-control">
-    <br/>
+            <label for="username" class="form-label" id="username_label">{{ translations.username }}</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="{{ translations.enter_email }}">
+            <br/>
 
-    <input type="submit" value="{{ translations.submit }}" class="btn btn-secondary">
+            <label for="password" class="form-label" id="password_label">{{ translations.password }}</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="{{ translations.enter_password }}">
+            <br/>
 
-</form>
+            <input type="submit" value="{{ translations.login }}" class="log_reg_button">
 
-<br><br><br>
+        </form> <br><br><br>
+
+    </div>
+</div>
 
 
 

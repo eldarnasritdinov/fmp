@@ -3,7 +3,7 @@
 {% block content %}
 
 {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
       {{message}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -14,8 +14,8 @@
 {% if current_user.is_authenticated %}
 
 <h1>{{ translations['add_event_post'] }}</h1>
-    <br/>
-    <form method="POST">
+
+    <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
@@ -33,6 +33,30 @@
         </div>
         <br/>
 
+        <div class="form-group">
+            <label class="form-label">{{ translations['image'] }}</label>
+            {{ form.image(class="form-control-file") }}
+        </div>
+        <br/>
+
+        <!-- Hidden input fields for latitude and longitude -->
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+
+            <!-- Embed Google Maps iframe -->
+        <div class="form-group">
+            <label class="form-label">Choose Event Location</label>
+            <iframe
+                width="100%"
+                height="400"
+                frameborder="0"
+                scrolling="no"
+                marginheight="0"
+                marginwidth="0"
+                src="https://maps.google.com/maps?width=100%&height=400&hl=en&q=&ie=UTF8&t=&z=14&iwloc=B&output=embed">
+            </iframe>
+        </div>
+
         {{ form.submit(class="btn btn-secondary", rows="15", value=translations['submit']) }}
 
     </form>
@@ -41,6 +65,7 @@
     {{ ckeditor.config(name='content') }}
 
 <br><br>
+
 
 {% else %}
 <h2>{{ translations['in_order_to_access_you_need_to'] }} <b><a href="{{ url_for('login') }}">{{ translations['login'] }}</a></b></h2>

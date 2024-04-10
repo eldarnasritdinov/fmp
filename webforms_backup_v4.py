@@ -3,7 +3,8 @@ from wtforms import StringField, SubmitField, PasswordField, BooleanField, Valid
 from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileField
+
 
 
 # Create a search form
@@ -24,7 +25,6 @@ class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     # content = StringField('Content', validators=[DataRequired()], widget=TextArea())
     content = CKEditorField('Content', validators=[DataRequired()])
-    image = FileField('Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])  # Add this line for the image field
     slug = StringField('Slug', validators=[DataRequired()])
     included_users = SelectMultipleField('Included Users', choices=[], widget=widgets.ListWidget(prefix_label=False), option_widget=widgets.CheckboxInput())
     submit = SubmitField('Submit')

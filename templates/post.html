@@ -2,7 +2,7 @@
 {% block content %}
 
 {% for message in get_flashed_messages() %}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
   {{message}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -16,7 +16,24 @@
     <p>{{ post.content|safe }}<br>
 </div>
 
-    <br>
+<br>
+
+<div class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-2">
+            <h5 class="card-title">{{ translations.mentioned_users }}</h5>
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+                <ul>
+                    {% for user in post.included_users %}
+                        <li>{{ user.username }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="card mb-3">
     <div class="row no-gutters">

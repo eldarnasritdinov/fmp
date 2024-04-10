@@ -1,5 +1,5 @@
 h1 {
-    color: blue;
+    color: white;
 }
 
 .container {
@@ -11,3 +11,196 @@ header {
         width: 100%;
         background-color: #62828F;
     }
+
+.navbar {
+    background-color: #62828F;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #143954;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+}
+
+.form-label {
+    color: white;
+}
+
+.shadow {
+    background-color: #102E45;
+    color: white;
+}
+
+.form-control,
+.form-control:focus,
+.form-control:valid { /* Apply style when input is valid */
+    background-color: #102E45;
+    border-color: transparent;
+    color: white;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+
+.nav-link {
+    color: #dbdbdb;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white;
+}
+
+.navbar-toggler-icon {
+    color: white;
+}
+
+
+/* Pagination styles */
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination .page-item .page-link {
+    color: #B1DD02; /* Change color to #B1DD02 */
+    border: 1px solid #ccc;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #B1DD02; /* Change background color to #B1DD02 */
+    border-color: #B1DD02; /* Change border color to #B1DD02 */
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #aaa;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+
+.log_in_out_wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.log_in_out {
+    height: 100%;
+    width:60%;
+}
+
+.log_in_out h1 {
+    color: #B1DD02;
+}
+
+.log_in_out p {
+    color: white;
+}
+
+.log_in_out a {
+    color: #B1DD02;
+}
+
+.log_reg_button {
+    background-color: 62828F;
+    height: 50px;
+    width: 100%;
+    border: none;
+    border-radius: 30px;
+    background-color: #62828F;
+    color: white;
+}
+
+#username_label, #name_label, #email_label, #password_label, #password_confirm_label, #language_label, #role_label {
+    color: #468A03;
+}
+
+#username, #password, #email, #name, #password_hash, #password_hash2 {
+    background-color: #143954;
+    border-bottom: 2px solid #B1DD02;
+    border-radius: 0px;
+}
+
+#username::placeholder, #password::placeholder {
+    color: #bfbfbf;
+}
+
+.img_block {
+    height: 100vh; /* Set height to cover the entire viewport height */
+    width: 100%; /* Set width to cover the entire viewport width */
+    background-image: url('https://media.licdn.com/dms/image/C4E12AQFVQf9ncbQCww/article-cover_image-shrink_720_1280/0/1629957826046?e=2147483647&v=beta&t=68bRjhoYD9rdzRqlkSc_PmrMoGejeD3pJvbIOe6M2iY');
+    background-size: cover; /* Cover the entire container with the background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.img_block h1 {
+    font-size: 100px;
+}
+
+.img_block h3 {
+    color: white;
+}
+
+.green-m {
+    color: #468A03;
+}
+
+.index_container {
+    height: 660px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.index_layer {
+    height: 300px;
+    width: 96%;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.index_info_box {
+    height: 100%;
+    width: 100%;
+}
+
+.index_info_box a {
+    text-decoration: none;
+    color: #B1DD02;
+    transition: color 0.3s ease;
+}
+
+.index_info_box h1 {
+    border-bottom: 2px solid #B1DD02;
+    padding-bottom: 10px;
+}
+
+.index_info_box p {
+    padding-top: 10px;
+    color: white;
+}
+
+.index_info_box a:hover {
+    color: #468A03;
+}

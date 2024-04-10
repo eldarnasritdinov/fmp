@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ translations.invitations }}</h1> <br>
+
+{% for post in invited_events %}
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <b><h2>{{ post.title }}</h2></b> <br>
+    {{ translations.by }}: {{ post.poster.name }} <br> <hr>
+    <p>{{ post.content|safe }}<br> <br>
+
+    <a href="{{ url_for('post', id=post.id) }}" class="btn btn-outline-secondary">{{ translations.read }}</a>
+</div>
+{% endfor %}
+
+{% endblock %}

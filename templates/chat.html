@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Chat with {{ recipient_info.name }}</h1>
+    <div id="messages"></div>
+    <input type="text" id="messageInput">
+    <button onclick="sendMessage()">Send</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function getMessages() {
+            $.get('/get_messages/{{ recipient_id }}', function(messages) {
+                $('#messages').empty();
+                messages.forEach(function(message) {
+                    $('#messages').append('<p>' + message.message + '</p>');
+                });
+            });
+        }
+
+        function sendMessage() {
+            var message = $('#messageInput').val();
+            $.post('/send_message', {recipient_id: {{ recipient_id }}, message: message}, function(response) {
+                if (response.success) {
+                    $('#messageInput').val('');
+                    getMessages();
+                } else {
+                    alert(response.message);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            getMessages();
+        });
+    </script>
+</body>
+</html>

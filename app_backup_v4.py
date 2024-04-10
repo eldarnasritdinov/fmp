@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, request, redirect, url_for, session
+from flask import Flask, render_template, flash, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_migrate import Migrate
@@ -15,19 +15,7 @@ import json
 
 from functools import wraps
 
-import smtplib
-import ssl
-
-
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-
-from dotenv import load_dotenv
-# config = dotenv_values('.env')
-
-# Load environment variables from .env file
-load_dotenv()
+from wtforms import SelectMultipleField
 
 
 app = Flask(__name__)
@@ -173,21 +161,22 @@ def dashboard():
     return render_template('dashboard.html', translations=translations)
 
 
-@app.route('/posts', methods=['GET'])
+@app.route('/posts')
 def posts():
-    page = request.args.get('page', 1, type=int)
-    per_page = 15  # Number of posts per page
 
-    posts = Posts.query.order_by(Posts.date_posted).paginate(page=page, per_page=per_page)
+    posts = Posts.query.order_by(Posts.date_posted)
 
     if current_user.is_authenticated:
         user_language = current_user.language  # Assuming you have access to the user's selected language
+        translations = load_translations(user_language)
+
+        return render_template('posts.html', posts=posts, translations=translations)
+
     else:
         user_language = 'ru'  # Default language is Russian when user is not logged in
+        translations = load_translations(user_language)
 
-    translations = load_translations(user_language)
-
-    return render_template('posts.html', posts=posts, translations=translations)
+        return render_template('posts.html', posts=posts, translations=translations)
 
 
 @app.route('/posts/<int:id>')
@@ -248,157 +237,78 @@ def edit_post(id):
 def delete_post(id):
     post_to_delete = Posts.query.get_or_404(id)
     id = current_user.id
-    if post_to_delete.poster:
-        if id == post_to_delete.poster.id or id == 20:
-            try:
-                db.session.delete(post_to_delete)
-                db.session.commit()
+    if id == post_to_delete.poster.id or id == 20:
 
-                flash('Blog Post was deleted')
-                # Redirect to the posts route to display remaining posts
-                return redirect(url_for('posts'))
+        try:
+            db.session.delete(post_to_delete)
+            db.session.commit()
 
-            except Exception as e:
-                flash('There was a problem deleting the post: {}'.format(str(e)))
-        else:
-            flash('You are not allowed to delete posts created by other users')
+            flash('Blog Post was deleted')
+
+            # Grab and return all the posts from the database
+            posts = Posts.query.order_by(Posts.date_posted)
+            return render_template('posts.html', posts=posts)
+
+        except:
+            flash('A shit, there was a problem deleting the post, try again')
+
+            # Grab and return all the posts from the database
+            posts = Posts.query.order_by(Posts.date_posted)
+            return render_template('posts.html', posts=posts)
+
     else:
-        flash('This post cannot be deleted because it has no associated user')
+        flash('You are not allowed to delete other posts')
 
-    # Redirect to the posts route in any case
-    return redirect(url_for('posts'))
-
-
-def remove_posts_without_authors():
-    # Query posts with no associated user authors
-    posts_without_authors = Posts.query.filter_by(poster_id=None).all()
-
-    # Delete posts without authors
-    for post in posts_without_authors:
-        db.session.delete(post)
-
-    # Commit the changes
-    db.session.commit()
+        # Grab and return all the posts from the database
+        posts = Posts.query.order_by(Posts.date_posted)
+        return render_template('posts.html', posts=posts)
 
 
-
-
-# # Add Post Page
-# @app.route('/add_post', methods=['GET', 'POST'])
-# @login_required  # Ensure the user is logged in
-# @organizer_required  # Ensure the user is an organizer
-# def add_post():
-#     form = PostForm()
-#
-#     user_language = current_user.language  # Assuming you have access to the user's selected language
-#     translations = load_translations(user_language)
-#
-#     included_users = []  # Initialize included_users as an empty list
-#
-#     if request.method == 'POST':  # Check if the request method is POST
-#
-#         if 'searched' in request.form:  # Check if it's a search form submission
-#             searched_username = request.form['searched']
-#             users = Users.query.filter(Users.username.like('%' + searched_username + '%')).order_by(Users.username).all()
-#             return render_template('add_post.html', form=form, translations=translations, users=users)
-#
-#         elif form.validate_on_submit():  # Otherwise, it's a post form submission
-#             poster = current_user.id
-#
-#             post = Posts(title=form.title.data, content=form.content.data, slug=form.slug.data, poster_id=poster)
-#
-#             # Clearing the form
-#             form.title.data = ''
-#             form.content.data = ''
-#             form.slug.data = ''
-#
-#             # Add post data to database
-#             db.session.add(post)
-#             db.session.commit()
-#
-#             # Process included users
-#             for user_id in form.included_users.data:
-#                 user = Users.query.get(user_id)
-#                 if user:
-#                     post.included_users.append(user)
-#                     included_users.append(user.username)  # Add included user's username to the list
-#             db.session.commit()
-#
-#             flash('Blog Post was submitted successfully')
-#
-#     # Render the template with the form, translations, and included users list
-#     return render_template('add_post.html', form=form, translations=translations, included_users=included_users)
-
-
-# Add Post Page
+# add Post Page
 @app.route('/add_post', methods=['GET', 'POST'])
-@login_required
-@organizer_required
+@login_required  # Ensure the user is logged in
+@organizer_required  # Ensure the user is an organizer
 def add_post():
     form = PostForm()
 
-    user_language = current_user.language
+    user_language = current_user.language  # Assuming you have access to the user's selected language
     translations = load_translations(user_language)
+
+    # # Fetch users
+    # users = Users.query.all()
+    #
+    # # Create choices for the included_users field
+    # user_choices = [(str(user.id), user.username) for user in users]
+    #
+    # # Set choices for the included_users field
+    # form.included_users.choices = user_choices
+    form.included_users.choices = [(user.id, user.username) for user in Users.query.all()]
 
     if form.validate_on_submit():
         poster = current_user.id
-        image_filename = None
 
-        if form.image.data:
-            image_file = form.image.data
-            image_filename = secure_filename(image_file.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
-            image_file.save(image_path)
+        post = Posts(title=form.title.data, content=form.content.data, slug=form.slug.data, poster_id=poster)
 
-        # Extract latitude and longitude from the request
-        latitude = request.form.get('latitude')
-        longitude = request.form.get('longitude')
+        # Clearing the form
+        form.title.data = ''
+        form.content.data = ''
+        form.slug.data = ''
 
-        # Ensure latitude and longitude are not empty strings
-        if not latitude:
-            latitude = None
-        if not longitude:
-            longitude = None
-
-        post = Posts(
-            title=form.title.data,
-            content=form.content.data,
-            slug=form.slug.data,
-            poster_id=poster,
-            image=image_filename,
-            latitude=latitude,
-            longitude=longitude
-        )
-
+        # Add post data to database
         db.session.add(post)
         db.session.commit()
 
-        flash('Blog Post was submitted successfully. Invite some people!')
-        return redirect(url_for('add_users_to_post', post_id=post.id))
+        # Process mentioned users
+        for user_id in form.included_users.data:
+            user = Users.query.get(user_id)
+            if user:
+                post.included_users.append(user)
+        db.session.commit()
 
+        flash('Blog Post was submitted successfully')
+
+    # Redirect to the webpage
     return render_template('add_post.html', form=form, translations=translations)
-
-
-# New view for adding users to a post
-@app.route('/add_users_to_post/<int:post_id>', methods=['GET', 'POST'])
-@login_required
-@organizer_required
-def add_users_to_post(post_id):
-
-    post = Posts.query.get_or_404(post_id)
-    form = SearchForm()  # Create this form for searching users
-
-    user_language = current_user.language
-    translations = load_translations(user_language)
-
-    if form.validate_on_submit():
-        print('TESTSTAKJHFLKSHDFLKHSJDKJSHLDFKJHSLKDJHLKSDJF')
-        # Logic to search for users and invite them to the post
-        # This logic depends on how you implement the search functionality
-        pass
-
-    return render_template('add_users_to_post.html', post=post, form=form, translations=translations)
-
 
 
 # JSON thing
@@ -486,31 +396,23 @@ def add_user():
     name = None
     form = UserForm()
     if form.validate_on_submit():
-        # Check if email is already taken
-        existing_user_email = Users.query.filter_by(email=form.email.data).first()
-        if existing_user_email:
-            flash('Email address is already taken. Please choose a different one.', 'error')
-        else:
-            # Check if username is already taken
-            existing_user_username = Users.query.filter_by(username=form.username.data).first()
-            if existing_user_username:
-                flash('Username is already taken. Please choose a different one.', 'error')
-            else:
-                # Hash the password
-                hashed_pw = generate_password_hash(form.password_hash.data, 'pbkdf2')
-                user = Users(username=form.username.data, name=form.name.data, email=form.email.data, sex=form.sex.data, password_hash=hashed_pw, role=form.role.data, language=form.language.data)
-                db.session.add(user)
-                db.session.commit()
-                flash('Account created successfully!', 'success')
+        user = Users.query.filter_by(email=form.email.data).first()
+        if user is None:
+            # Hash the password
+            hashed_pw = generate_password_hash(form.password_hash.data, 'pbkdf2')
+            user = Users(username=form.username.data, name=form.name.data, email=form.email.data, sex=form.sex.data, password_hash=hashed_pw, role=form.role.data, language=form.language.data)  # Include role information
+            db.session.add(user)
+            db.session.commit()
+        name = form.name.data
+        form.username.data = ''
+        form.name.data = ''
+        form.email.data = ''
+        form.sex.data = ''
+        form.password_hash = ''
+        form.role.data = ''  # Clear role field after submission
+        form.language.data = ''  # Clear language field after submission
 
-                # Clear form fields after successful submission
-                form.username.data = ''
-                form.name.data = ''
-                form.email.data = ''
-                form.sex.data = ''
-                form.password_hash = ''
-                form.role.data = ''
-                form.language.data = ''
+        flash('User Added Succesfully!')
 
     user_language = 'ru'  # Default language is Russian when user is not logged in
     translations = load_translations(user_language)
@@ -558,149 +460,6 @@ def search():
         posts = posts.order_by(Posts.title).all()
 
         return render_template('search.html', form=form, searched=post.searched, posts=posts)
-
-
-# Search Users Function
-@app.route('/search/users', methods=['POST'])
-def search_user():
-    form = SearchForm()
-    users = Users.query
-    if form.validate_on_submit():
-        user.searched = form.searched.data
-        users = users.filter(Users.username.like('%' + user.searched + '%'))
-        users = users.order_by(Users.username).all()
-        return render_template('admin.html', form=form, searched=user.searched, users=users)
-
-    # If form validation fails, render the admin.html template with the form
-    # and no search results
-    return render_template('admin.html', form=form, message='No such user')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@app.route('/add_users_to_post/<int:post_id>/search/users', methods=['GET','POST'])
-def search_user_to_post(post_id):
-    form = SearchForm()
-    post = Posts.query.get_or_404(post_id)  # Retrieve the post
-
-    if form.validate_on_submit():
-        user.searched = form.searched.data
-        users = Users.query.filter(Users.username.like('%' + user.searched + '%')).order_by(Users.username).all()
-        return render_template('add_users_to_post.html', post=post, form=form, searched=user.searched, users=users)
-
-    # If form validation fails, render the template with the form and no search results
-    return render_template('add_users_to_post.html', post=post, form=form, message='No such user')
-
-
-# smtp_port = 587
-# smtp_server = "smtp@gmail.com"
-# email_from = 'eventm.kgz@gmail.com'
-# email_to = ''
-# pswd = 'fcgr rpef ujty rjuh'
-# message = "You have been invited to an event!"
-# simple_email_context = ssl.create_default_context()
-#
-# try:
-#     print('Connecting to server...')
-#     TIE_server = smtplib.SMTP(smtp_server, smtp_port)
-#     TIE_server.starttls(context=simple_email_context)
-#     TIE_server.login(email_from, pswd)
-#     print('Connected to server')
-#     TIE_server.sendmail(email_from, email_to)
-#     print(f'Email send to {email_to}')
-#
-# except Exception as e:
-#     print(e)
-#
-# finally:
-#     TIE_server.quit()
-
-
-@app.route('/invite_user_to_post/<int:post_id>/<int:user_id>', methods=['GET', 'POST'])
-def invite_user_to_post(post_id, user_id):
-
-    post = Posts.query.get_or_404(post_id)
-    user = Users.query.get_or_404(user_id)
-
-    # Add the user to the post
-    post.included_users.append(user)
-    db.session.commit()
-
-    # Email sending logic
-    smtp_port = 587
-    smtp_server = "smtp.gmail.com"
-    email_from = 'eventm.kgz@gmail.com'
-    pswd = os.getenv("APP_PASSWORD")
-
-    # Create a secure SSL context
-    simple_email_context = ssl.create_default_context()
-
-    try:
-        # Construct the email message
-        message = MIMEMultipart()
-        message["From"] = email_from
-        message["To"] = user.email
-        message["Subject"] = "Invitation to an event"
-        body = f"Hi {user.username},\n\nYou have been invited to an event: {post.title}."
-        message.attach(MIMEText(body, "plain"))
-        text = message.as_string()
-
-        # Connect to the SMTP server and send the email
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls(context=simple_email_context)
-            server.login(email_from, pswd)
-            server.sendmail(email_from, user.email, text)
-
-        flash(f'User {user.username} has been invited to the post "{post.title}"')
-    except Exception as e:
-        flash('Failed to send invitation email.')
-        print(e)
-
-    return redirect(url_for('add_users_to_post', post_id=post_id))
-
-
-@app.route('/invited_events')
-@login_required
-def invited_events():
-    user_language = current_user.language  # Assuming you have access to the user's selected language
-    translations = load_translations(user_language)
-
-    invited_events = current_user.included_in_posts
-    return render_template('invited_events.html', invited_events=invited_events, translations=translations)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -783,13 +542,10 @@ class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     content = db.Column(db.Text)
-    image = db.Column(db.String(255))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     slug = db.Column(db.String(255))
     poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    latitude = db.Column(db.Float)
-    longitude = db.Column(db.Float)
-    # Many-to-many relationship with users
+    # Establish a many-to-many relationship with users
     included_users = db.relationship('Users', secondary=post_users_association, backref='included_in_posts')
 
 
@@ -853,7 +609,6 @@ class News(db.Model):
         return '<Name %r>' % self.name
 
 # ----------------------------------------------------------------------------------------------------------------------
-
 
 if __name__ == "__main__":
     app.run(debug=True)

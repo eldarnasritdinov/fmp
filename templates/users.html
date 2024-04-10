@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for user in users %}
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <b><h2>{{ user.username }}</h2></b> <br>
+            {{ post.poster.name }} <br> <hr>
+            <p>{{ post.content|safe }}<br> <br>
+        </div>
+    {% endfor %}
+
+{% endblock %}

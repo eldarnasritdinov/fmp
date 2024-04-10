@@ -2,10 +2,40 @@
 
 {% block content %}
 
-    <h2>Admin Page</h2>
+    <h2>{{ translations.admin_page }}</h2>
 
-    {% for our_user in our_users %}
-        Account type: {{our_user.role}}. (UserID: {{ our_user.id }}) {{ our_user.username }} <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }}. {{ our_user.sex }} - <a href="{{ url_for('delete', id=our_user.id) }}">DELETE</a> <br>
-    {% endfor %}
+    <form method="POST" action="{{ url_for('search_user') }}" class="form-inline my-2 my-lg-0">
+          {{ form.hidden_tag() }}
+          <input name="searched" class="form-control mr-sm-2" type="search" placeholder="{{ translations.search_by_username }}" aria-label="Search">
+          <button class="btn btn-outline-success  my-2 my-sm-0" type="submit">{{ translations.search }}</button>
+    </form>
+
+    <hr>
+
+    {% if users %}
+
+        {% for user in users %}
+            <div class="shadow p-3 mb-5 bg-body rounded">
+                <b><h2>{{ user.username }}</h2></b> <br>
+                {{ translations.name }}: {{ user.name }} <br>
+                {{ translations.role }}: {{user.role}} <br>
+                {{ translations.email }}: {{user.email}} <br> <hr>
+                <a href="{{ url_for('update', id=user.id) }}" class="btn btn-outline-secondary">{{ translations.edit }}</a>
+                <a href="{{ url_for('delete', id=user.id) }}" class="btn btn-outline-danger">{{ translations.delete }}</a> <br>
+            </div>
+        {% endfor %}
+
+        <br>
+
+    {% elif message %}
+
+        <h1>{{ message }}</h1>
+
+    {% else %}
+
+        <h1>{{ translations.search_results }}</h1>
+
+    {% endif %}
+
 
 {% endblock %}

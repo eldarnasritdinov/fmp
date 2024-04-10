@@ -1,14 +1,62 @@
-{% extends 'base.html' %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block content %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+  {% include 'navbar.html' %}
+
+    <div class="img_block">
+        <h1>EVENT <span class="green-m">M</span></h1>
+        <h3>organisation of events</h3>
+    </div>
+
+  <div class="index_container">
+      <div class="index_layer">
+      <img src="https://media.istockphoto.com/id/614138202/photo/microphone-in-front-of-podium-with-crowd-in-the-background.jpg?s=612x612&w=0&k=20&c=PDLo2wZzkgaSrT4Rnd5aAn6TKimUtz9wPjoqIxdFPfY=">
+        <div class="index_info_box">
+            {% if current_user.is_authenticated %}
+                <h1><a href="{{ url_for('news') }}">{{ translations['news'] }}</a></h1>
+                <p>{{ translations['event_long_info'] }}</p>
+            {% else %}
+                <h1><a href="{{ url_for('news') }}">News</a></h1>
+                <p>We are a team of experienced and tech-savvy professionals capable of turning a valuable idea into an effective event. Stay informed with our latest news providing updates on what's happening in our world. Discover new products, promotions, and company achievements as they happen.</p>
+            {% endif %}
+        </div>
+      </div>
+
+      <div class="index_layer">
+        <div class="index_info_box">
+            {% if current_user.is_authenticated %}
+                <h1><a href="{{ url_for('posts') }}">{{ translations['events'] }}</a></h1>
+                <p>{{ translations['news_long_info'] }}</p>
+            {% else %}
+                <h1><a href="{{ url_for('posts') }}">Events</a></h1>
+                <p>We are a center that combines a large volume of logistics services in 1 service, as a result you get only high quality service. Thanks to the company's principles and client-oriented approach, our event manager will be your honorable and loyal friend, on whom you can rely. You can hand over all the responsible areas while focusing on the more important aspects of your event.</p>
+            {% endif %}
+        </div>
+          <img src="https://www.eventdrive.com/assets/blog/7-tips-pour-organiser-une-conference-qui-cartonne.jpg">
+      </div>
+  </div>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 
 
-{% if current_user.is_authenticated %}
-    <h1><a href="{{ url_for('news') }}">{{ translations['news'] }}</a></h1> <br>
-    <h1><a href="{{ url_for('posts') }}">{{ translations['events'] }}</a></h1> <br>
-{% else %}
-    <h1><a href="{{ url_for('news') }}">News</a></h1> <br>
-    <h1><a href="{{ url_for('posts') }}">Events</a></h1> <br>
-{% endif %}
-
-{% endblock %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

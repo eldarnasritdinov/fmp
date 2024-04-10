@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+    /* Hide the scrollbar */
+    .overflow-hidden::-webkit-scrollbar {
+        width: 0 !important;
+        display: none !important;
+    }
+</style>
+
 {% for message in get_flashed_messages() %}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
   {{message}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -18,18 +26,65 @@
 
 <br><br><br>
 
-{% for post in posts %}
-<div class="shadow p-3 mb-5 bg-body rounded">
-    <b><h2>{{ post.title }}</h2></b> <br>
-    {{ translations.by }}: {{ post.poster.name }} <br> <hr>
-    <p>{{ post.content|safe }}<br> <br>
-
-    <a href="{{ url_for('post', id=post.id) }}" class="btn btn-outline-secondary">{{ translations.read }}</a>
-    {% if current_user.is_authenticated and (post.poster_id == current_user.id or current_user.id == 20) %}
-        <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-outline-secondary">{{ translations.edit }}</a>
-        <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger">{{ translations.delete }}</a>
-    {% endif %}
+<div class="row">
+    {% for post in posts %}
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card shadow" style="min-height: 500px;">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ translations.by }}: {{ post.poster.name }}</p>
+                <div class="overflow-hidden" style="max-height: 315px; overflow-y: auto;">
+                    {% if post.image %}
+                        <img class="img-fluid" src="{{ url_for('static', filename='images/' + post.image) }}" alt="Event Picture">
+                    {% else %}
+                        <img src="https://static.wikia.nocookie.net/roblox-phantom-forces/images/a/a9/Photo-here.png/revision/latest?cb=20211117031545" class="img-fluid" alt="Image">
+                    {% endif %}
+                    <hr>
+                    <p class="card-text">{{ post.content|safe }}</p>
+                </div>
+                <div class="mt-auto">
+                    <a href="{{ url_for('post', id=post.id) }}" class="btn btn-outline-secondary">{{ translations.read }}</a>
+                    {% if current_user.is_authenticated and (post.poster_id == current_user.id or current_user.id == 20) %}
+                        <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-outline-secondary">{{ translations.edit }}</a>
+                        <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger">{{ translations.delete }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if posts.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('posts', page=posts.prev_num) }}">{{ translations.previous }}</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">{{ translations.previous }}</span></li>
+            {% endif %}
+
+            {% for page_num in posts.iter_pages() %}
+                {% if page_num %}
+                    {% if page_num == posts.page %}
+                        <li class="page-item active" aria-current="page"><span class="page-link">{{ page_num }}</span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="{{ url_for('posts', page=page_num) }}">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('posts', page=posts.next_num) }}">{{ translations.next }}</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">{{ translations.next }}</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
 
 {% endblock %}
