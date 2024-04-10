@@ -44,7 +44,8 @@ ckeditor = CKEditor(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 # Secret key!
-app.config['SECRET_KEY'] = '8931172771'
+# app.config['SECRET_KEY'] = '8931172771'
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
 UPLOAD_FOLDER = 'static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
