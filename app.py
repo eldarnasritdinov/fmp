@@ -39,7 +39,9 @@ ckeditor = CKEditor(app)
 # Old SQLite DB
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 # New MySQL DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:8931172771@localhost/fmp'
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:8931172771@localhost/fmp'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 # Secret key!
 app.config['SECRET_KEY'] = '8931172771'
@@ -803,7 +805,7 @@ class Users(db.Model, UserMixin):
     sex = db.Column(db.String(50))
     language = db.Column(db.String(10))  # Add a column for storing language preference
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
-    about = db.Column(db.Text(500), nullable=True)
+    about = db.Column(db.Text, nullable=True)
     profile_pic = db.Column(db.String(550), nullable=True)
     # Do some password stuff
     password_hash = db.Column(db.String(128))
