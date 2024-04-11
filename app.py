@@ -70,8 +70,7 @@ def load_translations(language):
         with open(filepath, 'r', encoding='utf-8') as f:
             translations = json.load(f)
     except FileNotFoundError:
-        flash(f"Translations file not found for language '{language}'.", 'error')
-        print(filepath)
+        flash(f"Translations file not found for language '{language}' File path = {filepath}.", 'error')
         # Return an empty dictionary
         translations = {}
     return translations
