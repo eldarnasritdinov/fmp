@@ -63,7 +63,7 @@ login_manager.login_view = 'login'
 
 # Load translations based on user's selected language
 def load_translations(language):
-    directory = 'static/translations'
+    directory = './static/translations'
     filename = f'translations_{language}.json'
     filepath = os.path.join(directory, filename)
     try:
