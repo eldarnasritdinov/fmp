@@ -71,7 +71,7 @@ def load_translations(language):
             translations = json.load(f)
     except FileNotFoundError:
         # Handle the case where translations file is not found for the given language
-        translations = {}
+        translations = {'error_message': f"Translations file not found for language '{language}'"}
     return translations
 
 
