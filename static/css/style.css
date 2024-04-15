@@ -204,3 +204,62 @@ html, body {
 .index_info_box a:hover {
     color: #468A03;
 }
+
+.form-control cke_contents  {
+    background-color: green;
+}
+
+/* smaller screen lvl 1 */
+@media (max-width: 1115px) {
+
+    .index_layer {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .index_layer img {
+        display: none;
+    }
+
+    .index_container {
+    height: 400px;
+    gap: 10px;
+}
+
+}
+
+/* smaller screen lvl 2 */
+@media (max-width: 900px) {
+
+    .index_container {
+        height: 600px;
+    }
+
+    .img_block h1 {
+        font-size: 60px;
+    }
+}
+
+
+/* smaller screen lvl 3 */
+@media (max-width: 608px) {
+
+    .index_container {
+        height: 500px;
+    }
+
+}
+
+/* smaller screen lvl 4 */
+@media (max-width: 550px) {
+
+    .index_container {
+        height: 600px;
+    }
+
+    .img_block h1 {
+        font-size: 60px;
+    }
+
+}
+

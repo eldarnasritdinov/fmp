@@ -12,7 +12,6 @@
 {% endfor %}
 
 <h1>{{ translations['dashboard'] }}</h1>
-<p>{{ translations['logged_in'] }}</p>
 
 <div class="card mb-3" style="border:none;">
   <div class="card-header" style="background-color: #102E45; color: white;">
@@ -20,14 +19,14 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-md-3">
-        {% if current_user.profile_pic %}
-          <img class="img-fluid mb-3" src="{{ url_for('static', filename='images/' + current_user.profile_pic) }}" alt="Profile Picture">
-        {% else %}
-          <img class="img-fluid mb-3" src="{{ url_for('static', filename='images/default_profile.jpg') }}" alt="Default Profile Picture">
-        {% endif %}
-      </div>
-      <div class="col-md-9">
+<!--      <div class="col-md-3">-->
+<!--        {% if current_user.profile_pic %}-->
+<!--          <img class="img-fluid mb-3" src="{{ url_for('static', filename='images/' + current_user.profile_pic) }}" alt="Profile Picture">-->
+<!--        {% else %}-->
+<!--          <img class="img-fluid mb-3" src="{{ url_for('static', filename='images/default_profile.jpg') }}" alt="Default Profile Picture">-->
+<!--        {% endif %}-->
+<!--      </div>-->
+      <div class="col-md-">
         <ul class="list-group">
           <li class="list-group-item"><strong>{{ translations['role'] }}:</strong> {{ current_user.role }}</li>
           <li class="list-group-item"><strong>{{ translations['username'] }}:</strong> {{ current_user.username }}</li>
@@ -47,7 +46,6 @@
 <div class="mb-3">
   <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary">{{ translations['update_user'] }}</a>
   <a href="{{ url_for('logout') }}" class="btn btn-dark">{{ translations['logout'] }}</a>
-  <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger">{{ translations['delete_user'] }}</a>
 </div>
 
 {% endblock %}

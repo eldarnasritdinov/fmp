@@ -1,0 +1,97 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+    }
+
+    nav {
+        height: 70px;
+        width: 100%;
+        background-color: #62828F;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    /* header img {
+        margin-left: 20px;
+    } */
+
+    .right_section {
+        border: 1px solid red;
+        height: 100%;
+        width: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 20px;
+    }
+
+    .right_section ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .right_section ul li {
+        list-style: none;
+    }
+
+    .right_section ul li a {
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+    }
+
+    .right_section img {
+        border-radius: 100%;
+    }
+
+    #logo {
+        margin-left: 20px;
+    }
+
+</style>
+
+
+<nav>
+    <img src="wow_logo.png" height="40px" id="logo">
+    <div class="right_section">
+        <ul>
+
+            <li><a href="#">{{ translations.home }}</a></li>
+
+            {% if current_user.is_authenticated %}
+
+            {% if current_user.id == 20 %}
+                <li><a href="{{ url_for('admin') }}">{{ translations.admin }}</a></li>
+            {% endif %}
+
+            <li><a href="{{ url_for('logout') }}">{{ translations.logout }}</a></li>
+            <li><a href="{{ url_for('dashboard') }}">{{ translations.dashboard }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ url_for('login') }}">{{ translations.login }}</a></li>
+            <li><a href="{{ url_for('add_user') }}">{{ translations.register }}</a></li>
+
+            {% endif %}
+
+            {% if current_user.is_authenticated and current_user.role == 'organizer' %}
+
+            <li><a href="{{ url_for('add_news') }}">{{ translations.create_news }}</a></li>
+            <li><a href="{{ url_for('add_post') }}">{{ translations.add_event_post }}</a></li>
+
+            {% endif %}
+
+            <li><img height="30px" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"></li>
+
+        </ul>
+    </div>
+</nav>

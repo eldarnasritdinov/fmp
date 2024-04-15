@@ -18,13 +18,15 @@
 </div>
 {% endfor %}
 
-{% if current_user.is_authenticated %}
-    <h1>{{ translations.events }}</h1>
-{% else %}
-    <h1>{{ translations.events }}</h1>
-{% endif %}
+<h1>{{ translations.events }}</h1> <br>
 
-<br><br><br>
+<form method="POST" action="{{ url_for('search') }}" class="form-inline my-2 my-lg-0">
+  {{ form.hidden_tag() }}
+  <input name="searched" class="form-control mr-sm-2" type="search" placeholder="{{ translations.search_event }}" aria-label="Search">
+  <button class="btn btn-outline-success  my-2 my-sm-0" type="submit">{{ translations.search }}</button>
+</form>
+
+<br>
 
 <div class="row">
     {% for post in posts %}

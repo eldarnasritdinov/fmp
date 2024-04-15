@@ -1,13 +1,18 @@
 
+
+
 <nav class="navbar navbar-expand-lg">
-  <a class="navbar-brand" href="#">{{ translations.brand }}</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <a class="navbar-brand" href="#">
+    <img src="https://i.ibb.co/k36TBX6/wow-logo.png" height="30px" id="logo">
+    {{ translations.brand }}
+  </a>
+  <a href="#" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <img src="https://erdbeerlandfunck.de/wp-content/uploads/2020/03/white-down-arrow-png-2.png" alt="Expand Button" height="40px">
+  </a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-
+    <ul class="navbar-nav mr-auto"></ul> <!-- Leave this empty -->
+    <ul class="navbar-nav ml-auto"> <!-- Add ml-auto class here -->
       <li class="nav-item active">
         <a class="nav-link" href="{{ url_for('index') }}">{{ translations.home }}</a>
       </li>
@@ -25,6 +30,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('dashboard') }}">{{ translations.dashboard }}</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('invited_events') }}">{{ translations.invitations }}</a>
       </li>
       {% else %}
       <li class="nav-item">
@@ -46,29 +54,210 @@
       </li>
       {% endif %}
 
+<!--      <li class="nav-item dropdown">-->
+<!--        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--          {{ translations.more }}-->
+<!--        </a>-->
+<!--        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--          {% if current_user.is_authenticated %}-->
+<!--          <a class="dropdown-item" href="{{ url_for('invited_events') }}">{{ translations.invitations }}</a>-->
+<!--          <a class="dropdown-item" href="#">{{ translations.language }}</a>-->
+<!--          <a class="dropdown-item" href="#">{{ translations.todo_list }}</a>-->
+<!--          <a class="dropdown-item" href="#">{{ translations.settings }}</a>-->
+<!--          <div class="dropdown-divider"></div>-->
+<!--          {% endif %}-->
+<!--          <a class="dropdown-item" href="{{ url_for('support') }}">{{ translations.support }}</a>-->
+<!--        </div>-->
+<!--      </li>-->
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{ translations.more }}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {% if current_user.is_authenticated %}
-          <a class="dropdown-item" href="{{ url_for('invited_events') }}">{{ translations.invitations }}</a>
-          <a class="dropdown-item" href="#">{{ translations.language }}</a>
-          <a class="dropdown-item" href="#">{{ translations.todo_list }}</a>
-          <a class="dropdown-item" href="#">{{ translations.settings }}</a>
-          <div class="dropdown-divider"></div>
-          {% endif %}
-          <a class="dropdown-item" href="{{ url_for('support') }}">{{ translations.support }}</a>
-        </div>
+      <li class="nav-item">
+          <img style="border-radius: 100%; margin-left: 10px;" height="37px" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+<!--          <img style="border-radius: 100%;" height="30px" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">-->
       </li>
 
-
     </ul>
-    <form method="POST" action="{{ url_for('search') }}" class="form-inline my-2 my-lg-0">
-      {{ form.hidden_tag() }}
-      <input name="searched" class="form-control mr-sm-2" type="search" placeholder="{{ translations.search_event }}" aria-label="Search">
-      <button class="btn btn-outline-success  my-2 my-sm-0" type="submit">{{ translations.search }}</button>
-    </form>
   </div>
 </nav>
+
+
+
+
+<!--<style>-->
+
+<!--    .nav-class {-->
+<!--        height: 70px;-->
+<!--        width: 100%;-->
+<!--        background-color: #62828F;-->
+<!--        display: flex;-->
+<!--        align-items: center;-->
+<!--        justify-content: space-between;-->
+<!--    }-->
+
+<!--    .nav-class.active-height {-->
+<!--        height: 400px; /* Change height to auto when active */-->
+<!--        /* Other styles remain unchanged */-->
+<!--    }-->
+
+<!--    /* header img {-->
+<!--        margin-left: 20px;-->
+<!--    } */-->
+
+<!--    .right_section {-->
+<!--        height: 100%;-->
+<!--        width: 1000px;-->
+<!--        display: flex;-->
+<!--        align-items: center;-->
+<!--        justify-content: flex-end;-->
+<!--        padding-right: 20px;-->
+<!--    }-->
+
+<!--    .right_section ul {-->
+<!--        display: flex;-->
+<!--        align-items: center;-->
+<!--        justify-content: center;-->
+<!--        gap: 20px;-->
+<!--        margin-bottom: 0px;-->
+<!--    }-->
+
+<!--    .right_section ul li {-->
+<!--        list-style: none;-->
+<!--    }-->
+
+<!--    .right_section ul li a {-->
+<!--        text-decoration: none;-->
+<!--        color: white;-->
+<!--        font-size: 15px;-->
+<!--    }-->
+
+<!--    .right_section img {-->
+<!--        border-radius: 100%;-->
+<!--    }-->
+
+<!--    #logo {-->
+<!--        margin-left: 20px;-->
+<!--    }-->
+
+<!--    @media (max-width: 900px) {-->
+<!--    .right_section .nav-links {-->
+<!--        display: none;-->
+<!--    }-->
+
+<!--        .right_section .burger-menu {-->
+<!--            display: block;-->
+<!--        }-->
+<!--    }-->
+
+<!--    @media (min-width: 900px) {-->
+<!--        .right_section .burger-menu {-->
+<!--            display: none;-->
+<!--        }-->
+<!--    }-->
+
+<!--    .burger-menu {-->
+<!--    display: none;-->
+<!--    cursor: pointer;-->
+<!--}-->
+
+<!--.burger-menu .line {-->
+<!--    width: 25px;-->
+<!--    height: 3px;-->
+<!--    background-color: white;-->
+<!--    margin: 5px;-->
+<!--}-->
+
+<!--.nav-links {-->
+<!--    display: none;-->
+<!--    align-items: center;-->
+<!--    justify-content: center;-->
+<!--    gap: 20px;-->
+<!--    margin-bottom: 0px;-->
+<!--}-->
+
+<!--.nav-links.active {-->
+<!--    display: flex;-->
+<!--}-->
+
+<!--.nav-links li {-->
+<!--    list-style: none;-->
+<!--}-->
+
+<!--.nav-links li a {-->
+<!--    text-decoration: none;-->
+<!--    color: white;-->
+<!--    font-size: 15px;-->
+<!--}-->
+
+
+<!--@media (max-width: 900px) {-->
+
+<!--    .right_section ul {-->
+<!--        position: absolute; /* Position the dropdown menu absolutely */-->
+<!--        top: 70px; /* Adjust the top position to align with the navbar */-->
+<!--        right: 20px; /* Adjust the right position as needed */-->
+<!--        background-color: #62828F; /* Set background color */-->
+<!--        padding: 10px; /* Add padding for spacing */-->
+<!--        z-index: 1; /* Ensure dropdown appears above other content */-->
+<!--        display: none; /* Initially hide the dropdown menu */-->
+<!--        /* Other styles remain unchanged */-->
+<!--    }-->
+
+<!--    .right_section ul.active {-->
+<!--        display: flex; /* Show the dropdown menu when active */-->
+<!--    }-->
+<!--}-->
+
+<!--</style>-->
+
+<!--<script>-->
+<!--document.addEventListener('DOMContentLoaded', function () {-->
+<!--    const burgerMenu = document.querySelector('.burger-menu');-->
+<!--    const navLinks = document.querySelector('#navLinks');-->
+<!--    const navClass = document.querySelector('.nav-class');-->
+
+<!--    burgerMenu.addEventListener('click', function () {-->
+<!--        navLinks.classList.toggle('active');-->
+<!--        navClass.classList.toggle('active-height'); // Add or remove 'active-height' class-->
+<!--    });-->
+<!--});-->
+<!--</script>-->
+
+<!--<nav class="nav-class">-->
+<!--    <img src="https://i.ibb.co/k36TBX6/wow-logo.png" height="30px" id="logo">-->
+<!--    <div class="right_section">-->
+<!--        <ul class="nav-links" id="navLinks">-->
+
+<!--            <li><a href="{{ url_for('index') }}">{{ translations.home }}</a></li>-->
+
+<!--            {% if current_user.is_authenticated %}-->
+
+<!--            {% if current_user.id == 20 %}-->
+<!--                <li><a href="{{ url_for('admin') }}">{{ translations.admin }}</a></li>-->
+<!--            {% endif %}-->
+
+<!--            <li><a href="{{ url_for('logout') }}">{{ translations.logout }}</a></li>-->
+<!--            <li><a href="{{ url_for('dashboard') }}">{{ translations.dashboard }}</a></li>-->
+
+<!--            {% else %}-->
+
+<!--            <li><a href="{{ url_for('login') }}">{{ translations.login }}</a></li>-->
+<!--            <li><a href="{{ url_for('add_user') }}">{{ translations.register }}</a></li>-->
+
+<!--            {% endif %}-->
+
+<!--            {% if current_user.is_authenticated and current_user.role == 'organizer' %}-->
+
+<!--            <li><a href="{{ url_for('add_news') }}">{{ translations.create_news }}</a></li>-->
+<!--            <li><a href="{{ url_for('add_post') }}">{{ translations.add_event_post }}</a></li>-->
+
+<!--            {% endif %}-->
+
+<!--            <li><img height="30px" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"></li>-->
+
+<!--        </ul>-->
+<!--        <div class="burger-menu">-->
+<!--            <div class="line"></div>-->
+<!--            <div class="line"></div>-->
+<!--            <div class="line"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->

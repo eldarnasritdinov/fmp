@@ -18,49 +18,34 @@
 
 <br>
 
-<div class="card mb-3">
-    <div class="row no-gutters">
-        <div class="col-md-2">
-            <h5 class="card-title">{{ translations.mentioned_users }}</h5>
-        </div>
-        <div class="col-md-10">
-            <div class="card-body">
-                <ul>
-                    {% for user in post.included_users %}
-                        <li>{{ user.username }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="card mb-3">
-    <div class="row no-gutters">
 
-        <div class="col-md-2">
-            {% if post.poster.profile_pic %}
-                <img src="{{ url_for('static', filename='images/' + post.poster.profile_pic) }}" height="200" align="left">
-            {% else %}
-                <img src="{{ url_for('static', filename='images/default_profile.jpg') }}" width="150" align="left">
-            {% endif %}
-        </div>
+<!--<div class="card mb-3">-->
+<!--    <div class="row no-gutters">-->
 
-        <div class="col-md-10">
-            <div class="card-body">
-                <h5 class="card-title">{{ post.poster.name }}</h5>
-                <p class="card-text">
-                    {% if post.poster.about %}
-                        {{ translations.about_author }}: {{ post.poster.about }}
-                    {% else %}
-                        {{ translations.about_author }}: {{ translations.author_has_no_profile_yet }}
-                    {% endif %}
-                </p>
-            </div>
-        </div>
+<!--        <div class="col-md-2">-->
+<!--            {% if post.poster.profile_pic %}-->
+<!--                <img src="{{ url_for('static', filename='images/' + post.poster.profile_pic) }}" height="200" align="left">-->
+<!--            {% else %}-->
+<!--                <img src="{{ url_for('static', filename='images/default_profile.jpg') }}" width="150" align="left">-->
+<!--            {% endif %}-->
+<!--        </div>-->
 
-    </div>
-</div>
+<!--        <div class="col-md-10">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">{{ post.poster.name }}</h5>-->
+<!--                <p class="card-text">-->
+<!--                    {% if post.poster.about %}-->
+<!--                        {{ translations.about_author }}: {{ post.poster.about }}-->
+<!--                    {% else %}-->
+<!--                        {{ translations.about_author }}: {{ translations.author_has_no_profile_yet }}-->
+<!--                    {% endif %}-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
 
 <a href="{{ url_for('posts') }}" class="btn btn-outline-secondary">{{ translations.go_back }}</a>
 {% if current_user.is_authenticated and post.poster_id == current_user.id %}
