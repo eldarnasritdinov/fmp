@@ -263,3 +263,12 @@ html, body {
 
 }
 
+/* smaller screen lvl 4 */
+@media (max-width: 380px) {
+
+    #logo {
+        height: 20px;
+    }
+
+}
+
