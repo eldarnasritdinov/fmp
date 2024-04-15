@@ -12,48 +12,48 @@
 {% endfor %}
 
 {% if name %}
-    <h1>{{ name }}, {{ translations.account_successfully_created }} <a href="{{ url_for('login') }}">{{ translations.login }}</a></h1>
+    <h1>{{ name }}, your account has been successfully created. <a href="{{ url_for('login') }}">Log In</a></h1>
 {% else %}
 
 <div class="log_in_out_wrapper">
     <div class="log_in_out">
 
-    <h1>{{ translations.create_new_account }}</h1> <br>
-    <p>{{ translations.if_account_exists }} <b><a href="{{ url_for('login') }}">{{ translations.login }}</a></b> </p> <br>
+    <h1>Create new account</h1> <br>
+    <p>Already have an account? <b><a href="{{ url_for('login') }}">Log In</a></b> </p> <br>
 
     <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
-            <label for="username" class="form-label" id="username_label">{{ translations.username }}</label>
+            <label for="username" class="form-label" id="username_label">Username</label>
             <input type="text" name="username" id="username" class="form-control">
         </div>
         <div class="form-group">
-            <label for="name" class="form-label" id="name_label">{{ translations.name }}</label>
+            <label for="name" class="form-label" id="name_label">Name</label>
             <input type="text" name="name" id="name" class="form-control">
         </div>
         <div class="form-group">
-            <label for="email" class="form-label" id="email_label">{{ translations.email }}</label>
+            <label for="email" class="form-label" id="email_label">Email</label>
             <input type="email" name="email" id="email" class="form-control">
         </div>
         <div class="form-group">
-            <label for="password_hash" class="form-label" id="password_label">{{ translations.password }}</label>
+            <label for="password_hash" class="form-label" id="password_label">Password</label>
             <input type="password" name="password_hash" id="password_hash" class="form-control">
         </div>
         <div class="form-group">
-            <label for="password_hash2" class="form-label" id="password_confirm_label">{{ translations.confirm_password }}</label>
+            <label for="password_hash2" class="form-label" id="password_confirm_label">Confirm password</label>
             <input type="password" name="password_hash2" id="password_hash2" class="form-control">
         </div>
         <div class="form-group">
-            <label for="language" class="form-label" id="language_label">{{ translations.language }}</label>
+            <label for="language" class="form-label" id="language_label">Language (currently not working)</label>
             {{ form.language(class="form-control") }}
         </div>
         <div class="form-group">
-            <label for="role" class="form-label" id="role_label">{{ translations.role }}</label>
+            <label for="role" class="form-label" id="role_label">Role</label>
             {{ form.role(class="form-control") }}
         </div>
 
-        <button type="submit" class="log_reg_button">{{ translations.register }}</button>
+        <button type="submit" class="log_reg_button">Register</button>
 
     </form> <br><br><br>
 

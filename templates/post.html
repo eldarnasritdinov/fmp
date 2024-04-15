@@ -47,9 +47,9 @@
 <!--    </div>-->
 <!--</div>-->
 
-<a href="{{ url_for('posts') }}" class="btn btn-outline-secondary">{{ translations.go_back }}</a>
+<a href="{{ url_for('posts') }}" class="btn btn-outline-secondary">Go back</a>
 {% if current_user.is_authenticated and post.poster_id == current_user.id %}
-    <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger">{{ translations.delete }}</a>
+    <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger">Delete</a>
 {% endif %}
 
 {% endblock %}

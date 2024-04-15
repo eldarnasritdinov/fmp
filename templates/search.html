@@ -13,7 +13,7 @@
         <div class="card shadow" style="min-height: 500px;">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ post.title }}</h5>
-                <p class="card-text">{{ translations.by }}: {{ post.poster.name }}</p>
+                <p class="card-text">By: {{ post.poster.name }}</p>
                 <div class="overflow-hidden" style="max-height: 315px; overflow-y: auto;">
                     {% if post.image %}
                         <img class="img-fluid" src="{{ url_for('static', filename='images/' + post.image) }}" alt="Event Picture">
@@ -24,10 +24,10 @@
                     <p class="card-text">{{ post.content|safe }}</p>
                 </div>
                 <div class="mt-auto">
-                    <a href="{{ url_for('post', id=post.id) }}" class="btn btn-outline-secondary">{{ translations.read }}</a>
+                    <a href="{{ url_for('post', id=post.id) }}" class="btn btn-outline-secondary">Read</a>
                     {% if current_user.is_authenticated and (post.poster_id == current_user.id or current_user.id == 20) %}
-                        <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-outline-secondary">{{ translations.edit }}</a>
-                        <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger">{{ translations.delete }}</a>
+                        <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-outline-secondary">Edit</a>
+                        <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger">Delete</a>
                     {% endif %}
                 </div>
             </div>

@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-lg">
   <a class="navbar-brand" href="#">
     <img src="https://i.ibb.co/k36TBX6/wow-logo.png" height="30px" id="logo">
-    {{ translations.brand }}
+
   </a>
   <a href="#" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <img src="https://erdbeerlandfunck.de/wp-content/uploads/2020/03/white-down-arrow-png-2.png" alt="Expand Button" height="40px">
@@ -14,43 +14,43 @@
     <ul class="navbar-nav mr-auto"></ul> <!-- Leave this empty -->
     <ul class="navbar-nav ml-auto"> <!-- Add ml-auto class here -->
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('index') }}">{{ translations.home }}</a>
+        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
       </li>
 
       {% if current_user.is_authenticated %}
 
       {% if current_user.id == 20 %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('admin') }}">{{ translations.admin_page }}</a>
+        <a class="nav-link" href="{{ url_for('admin') }}">Admin Page</a>
       </li>
       {% endif %}
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('logout') }}">{{ translations.logout }}</a>
+        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('dashboard') }}">{{ translations.dashboard }}</a>
+        <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
       </li>
         <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('invited_events') }}">{{ translations.invitations }}</a>
+        <a class="nav-link" href="{{ url_for('invited_events') }}">Invitations</a>
       </li>
       {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('login') }}">{{ translations.login }}</a>
+        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('add_user') }}">{{ translations.register }}</a>
+        <a class="nav-link" href="{{ url_for('add_user') }}">Register</a>
       </li>
       {% endif %}
 
       {% if current_user.is_authenticated and current_user.role == 'organizer' %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('add_news') }}">{{ translations.create_news }}</a>
+        <a class="nav-link" href="{{ url_for('add_news') }}">Add news</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('add_post') }}">{{ translations.add_event_post }}</a>
+        <a class="nav-link" href="{{ url_for('add_post') }}">Add event post</a>
       </li>
       {% endif %}
 

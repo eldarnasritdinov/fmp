@@ -24,8 +24,8 @@
       <img src="https://media.istockphoto.com/id/614138202/photo/microphone-in-front-of-podium-with-crowd-in-the-background.jpg?s=612x612&w=0&k=20&c=PDLo2wZzkgaSrT4Rnd5aAn6TKimUtz9wPjoqIxdFPfY=">
         <div class="index_info_box">
             {% if current_user.is_authenticated %}
-                <h1><a href="{{ url_for('news') }}">{{ translations['news'] }}</a></h1>
-                <p>{{ translations['event_long_info'] }}</p>
+                <h1><a href="{{ url_for('news') }}">News</a></h1>
+                <p>We are a team of experienced and tech-savvy professionals capable of turning a valuable idea into an effective event. Stay informed with our latest news providing updates on what's happening in our world. Discover new products, promotions, and company achievements as they happen.</p>
             {% else %}
                 <h1><a href="{{ url_for('news') }}">News</a></h1>
                 <p>We are a team of experienced and tech-savvy professionals capable of turning a valuable idea into an effective event. Stay informed with our latest news providing updates on what's happening in our world. Discover new products, promotions, and company achievements as they happen.</p>
@@ -36,8 +36,8 @@
       <div class="index_layer">
         <div class="index_info_box">
             {% if current_user.is_authenticated %}
-                <h1><a href="{{ url_for('posts') }}">{{ translations['events'] }}</a></h1>
-                <p>{{ translations['news_long_info'] }}</p>
+                <h1><a href="{{ url_for('posts') }}">Events</a></h1>
+                <p>We are a center that combines a large volume of logistics services in 1 service, as a result you get only high quality service. Thanks to the company's principles and client-oriented approach, our event manager will be your honorable and loyal friend, on whom you can rely. You can hand over all the responsible areas while focusing on the more important aspects of your event.</p>
             {% else %}
                 <h1><a href="{{ url_for('posts') }}">Events</a></h1>
                 <p>We are a center that combines a large volume of logistics services in 1 service, as a result you get only high quality service. Thanks to the company's principles and client-oriented approach, our event manager will be your honorable and loyal friend, on whom you can rely. You can hand over all the responsible areas while focusing on the more important aspects of your event.</p>

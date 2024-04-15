@@ -13,22 +13,22 @@
 
 {% if current_user.is_authenticated %}
 
-<h1>{{ translations['create_news'] }}</h1>
+<h1>Create news</h1>
 <br/>
 <form method="POST">
 
     {{ form.hidden_tag() }}
-    <label class="form-label" for="name">{{ translations['enter_news_headline'] }}</label>
+    <label class="form-label" for="name">Enter news headline</label>
     {{ form.name(class="form-control") }}
     <br/>
-    <label class="form-label" for="description">{{ translations['enter_news_description'] }}</label>
+    <label class="form-label" for="description">Enter news description</label>
     {{ form.description(class="form-control") }}
     <br/>
-    {{ form.submit(class="btn btn-secondary", value=translations['submit']) }}
+    {{ form.submit(class="btn btn-secondary", value="Submit") }}
 </form>
 
 {% else %}
-<h2>{{ translations['in_order_to_access_you_need_to'] }} <b><a href="{{ url_for('login') }}">{{ translations['login'] }}</a></b></h2>
+<h2>In order to access this page you need to <b><a href="{{ url_for('login') }}">Login</a></b></h2>
 {% endif %}
 
 {% endblock %}

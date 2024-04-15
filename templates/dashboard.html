@@ -11,11 +11,11 @@
 </div>
 {% endfor %}
 
-<h1>{{ translations['dashboard'] }}</h1>
+<h1>Dashboard</h1>
 
 <div class="card mb-3" style="border:none;">
   <div class="card-header" style="background-color: #102E45; color: white;">
-      {{ translations['dashboard'] }}
+      Dashboard
   </div>
   <div class="card-body">
     <div class="row">
@@ -28,15 +28,15 @@
 <!--      </div>-->
       <div class="col-md-">
         <ul class="list-group">
-          <li class="list-group-item"><strong>{{ translations['role'] }}:</strong> {{ current_user.role }}</li>
-          <li class="list-group-item"><strong>{{ translations['username'] }}:</strong> {{ current_user.username }}</li>
-          <li class="list-group-item"><strong>{{ translations['name'] }}:</strong> {{ current_user.name }}</li>
-          <li class="list-group-item"><strong>{{ translations['email'] }}:</strong> {{ current_user.email }}</li>
-          <li class="list-group-item"><strong>{{ translations['language'] }}:</strong> {{ current_user.language }}</li>
-          <li class="list-group-item"><strong>{{ translations['gender'] }}:</strong> {{ current_user.sex }}</li>
-          <li class="list-group-item"><strong>{{ translations['joined'] }}:</strong> {{ current_user.date_added }}</li>
-          <li class="list-group-item"><strong>{{ translations['about'] }}:</strong> {{ current_user.about }}</li>
-          <li class="list-group-item"><strong>{{ translations['profile_picture'] }}:</strong> {{ current_user.profile_pic }}</li>
+          <li class="list-group-item"><strong>Role:</strong> {{ current_user.role }}</li>
+          <li class="list-group-item"><strong>Username:</strong> {{ current_user.username }}</li>
+          <li class="list-group-item"><strong>Name:</strong> {{ current_user.name }}</li>
+          <li class="list-group-item"><strong>Email:</strong> {{ current_user.email }}</li>
+          <li class="list-group-item"><strong>Language (currently not available):</strong> {{ current_user.language }}</li>
+          <li class="list-group-item"><strong>Gender</strong> {{ current_user.sex }}</li>
+          <li class="list-group-item"><strong>Date joined:</strong> {{ current_user.date_added }}</li>
+          <li class="list-group-item"><strong>About:</strong> {{ current_user.about }}</li>
+          <li class="list-group-item"><strong>Profile Picture:</strong> {{ current_user.profile_pic }}</li>
         </ul>
       </div>
     </div>
@@ -44,8 +44,8 @@
 </div>
 
 <div class="mb-3">
-  <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary">{{ translations['update_user'] }}</a>
-  <a href="{{ url_for('logout') }}" class="btn btn-dark">{{ translations['logout'] }}</a>
+  <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary">Update User</a>
+  <a href="{{ url_for('logout') }}" class="btn btn-dark">Logout</a>
 </div>
 
 {% endblock %}

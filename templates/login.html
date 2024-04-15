@@ -14,21 +14,21 @@
 <div class="log_in_out_wrapper">
     <div class="log_in_out">
 
-        <h1>{{ translations.login }}</h1> <br>
-        <p>{{ translations.if_account_not_exists }} <b><a href="{{ url_for('add_user') }}">{{ translations.register }}</a></b> </p> <br>
+        <h1>Login</h1> <br>
+        <p>Don't have an account? <b><a href="{{ url_for('add_user') }}">Register</a></b> </p> <br>
 
         <form method="POST">
             {{ form.hidden_tag() }}
 
-            <label for="username" class="form-label" id="username_label">{{ translations.username }}</label>
-            <input type="text" name="username" id="username" class="form-control" placeholder="{{ translations.enter_email }}">
+            <label for="username" class="form-label" id="username_label">Username</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="Enter email">
             <br/>
 
-            <label for="password" class="form-label" id="password_label">{{ translations.password }}</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="{{ translations.enter_password }}">
+            <label for="password" class="form-label" id="password_label">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password">
             <br/>
 
-            <input type="submit" value="{{ translations.login }}" class="log_reg_button">
+            <input type="submit" value="Login" class="log_reg_button">
 
         </form> <br><br><br>
 

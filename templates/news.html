@@ -10,18 +10,14 @@
 </div>
 {% endfor %}
 
-{% if current_user.is_authenticated %}
-    <h1>{{ translations.news }}</h1>
-{% else %}
-    <h1>{{ translations.news }}</h1>
-{% endif %}
+<h1 style="color: white;">News will be displayed here</h1>
 
-<br><br><br>
+<!--<br><br><br>-->
 
-{% for n in news %}
-    <h2><b>{{ n.name }}</b></h2> <br>
-    <p>{{ n.description }}</p>
-    <hr>
-{% endfor %}
+<!--{% for n in news %}-->
+<!--    <h2><b>{{ n.name }}</b></h2> <br>-->
+<!--    <p>{{ n.description }}</p>-->
+<!--    <hr>-->
+<!--{% endfor %}-->
 
-{% endblock %}
+<!--{% endblock %}-->

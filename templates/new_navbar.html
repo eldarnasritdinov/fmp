@@ -65,28 +65,28 @@
     <div class="right_section">
         <ul>
 
-            <li><a href="#">{{ translations.home }}</a></li>
+            <li><a href="#">Home</a></li>
 
             {% if current_user.is_authenticated %}
 
             {% if current_user.id == 20 %}
-                <li><a href="{{ url_for('admin') }}">{{ translations.admin }}</a></li>
+                <li><a href="{{ url_for('admin') }}">Admin Page</a></li>
             {% endif %}
 
-            <li><a href="{{ url_for('logout') }}">{{ translations.logout }}</a></li>
-            <li><a href="{{ url_for('dashboard') }}">{{ translations.dashboard }}</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
 
             {% else %}
 
-            <li><a href="{{ url_for('login') }}">{{ translations.login }}</a></li>
-            <li><a href="{{ url_for('add_user') }}">{{ translations.register }}</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('add_user') }}">Register</a></li>
 
             {% endif %}
 
             {% if current_user.is_authenticated and current_user.role == 'organizer' %}
 
-            <li><a href="{{ url_for('add_news') }}">{{ translations.create_news }}</a></li>
-            <li><a href="{{ url_for('add_post') }}">{{ translations.add_event_post }}</a></li>
+            <li><a href="{{ url_for('add_news') }}">Add News</a></li>
+            <li><a href="{{ url_for('add_post') }}">Add Event Post</a></li>
 
             {% endif %}
 

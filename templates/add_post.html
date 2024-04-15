@@ -13,13 +13,13 @@
 
 {% if current_user.is_authenticated %}
 
-<h1>{{ translations['add_event_post'] }}</h1>
+<h1>Add event post</h1>
 
     <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
-            <label class="form-label">{{ translations['title'] }}</label>
+            <label class="form-label">Title</label>
             {{ form.title(class="form-control") }}
         </div>
         <br/>
@@ -28,13 +28,13 @@
         <br/>
 
         <div class="form-group">
-            <label class="form-label">{{ translations['content'] }}</label>
+            <label class="form-label">Content</label>
             {{ form.content(class="form-control") }}
         </div>
         <br/>
 
         <div class="form-group">
-            <label class="form-label">{{ translations['image'] }}</label>
+            <label class="form-label">Image</label>
             {{ form.image(class="form-control-file") }}
         </div>
         <br/>
@@ -57,7 +57,7 @@
             </iframe>
         </div>
 
-        {{ form.submit(class="btn btn-secondary", rows="15", value=translations['submit']) }}
+        {{ form.submit(class="btn btn-secondary", rows="15", value="Submit") }}
 
     </form>
 
@@ -68,7 +68,7 @@
 
 
 {% else %}
-<h2>{{ translations['in_order_to_access_you_need_to'] }} <b><a href="{{ url_for('login') }}">{{ translations['login'] }}</a></b></h2>
+<h2>In order to access you need to <b><a href="{{ url_for('login') }}">Log In</a></b></h2>
 {% endif %}
 
 {% endblock %}
